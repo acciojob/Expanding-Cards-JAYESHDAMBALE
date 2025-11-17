@@ -1,1 +1,65 @@
-/*  your css code here. If applicable */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+
+    /* 1) The entire component wrapper must have class 'container' */
+    .container {
+      display: flex;                 /* panels sit in a row */
+      gap: 12px;                     /* spacing between panels */
+      padding: 16px;                 /* breathing room around */
+      min-height: 100vh;            /* full-screen experience */
+      align-items: center;           /* vertical center */
+      
+    }
+
+    /* 2) Each photo card must have class 'panel' */
+    .panel {
+      position: relative;            /* for absolute children */
+      flex: 0.5;                       /* shrunk state */
+      min-width: 60px;              /* prevents collapsing too small */
+      height: 70vh;                  /* card height */
+      border-radius: 50px;
+      overflow: hidden;              /* clip children */
+      cursor: pointer;
+      background-position: center;
+      background-size: cover;        /* fill the panel with the image */
+      transition: flex 600ms cubic-bezier(.2,.8,.2,1), filter 350ms ease;
+      display: flex;
+      align-items: flex-end;         /* keep text at bottom */
+      box-shadow: 0 8px 24px rgba(2,6,23,0.6);
+      filter: saturate(1);
+    }
+
+    /* 3) Active panel expands using flex (CSS handles expansion) */
+    .panel.active {
+      flex: 5;                       /* expanded state */
+      filter: saturate(1.15) contrast(1.02);
+		
+    }
+
+    /* Slightly dim non-active panels for focus */
+    .panel:not(.active) {
+      filter: brightness(0.7) saturate(0.95);
+    }
+
+    /* 4) Text inside each panel must have class 'img-text' */
+    .img-text {
+      color: white;
+      padding: 20px;
+      font-size: 1.25rem;
+      letter-spacing: 0.3px;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      background: linear-gradient(0deg, rgba(0,0,0,0.45), rgba(0,0,0,0.15));
+      width: 100%;
+      backdrop-filter: blur(2px);
+	  opacity: 0;
+    }
+
+    /* Make titles larger on the active panel for emphasis */
+    .panel.active .img-text { font-size: 1.5rem; padding: 28px; opacity: 1; }
+
+    /* Responsive tweaks */
+    @media (max-width: 800px) {
+      .container { gap: 8px; padding: 8px; }
+      .panel { height: 60vh; }
+      .panel.active { flex: 4; }
+    }
